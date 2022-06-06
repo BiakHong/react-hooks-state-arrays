@@ -4,13 +4,29 @@ import { spicyFoods, getNewSpicyFood } from "../data";
 function SpicyFoodList() {
   const [foods, setFoods] = useState(spicyFoods);
 
+  
   function handleAddFood() {
     const newFood = getNewSpicyFood();
+    setFoods([...foods,newFood])
     console.log(newFood);
   }
+  
+  function handleLiClick(fId){
+    const updatedFood= foods.map((fd)=>{
+      if(fId === fd.id){
+        return{ ...fd, heatLevel: fd.heatLevel+1}
+      }
+      else{
+        return fd;
+      }
+    })
+
+    setFoods(updatedFood)
+  }
+
 
   const foodList = foods.map((food) => (
-    <li key={food.id}>
+    <li key={food.id} onClick={()=> handleLiClick(food.id)}>
       {food.name} | Heat: {food.heatLevel} | Cuisine: {food.cuisine}
     </li>
   ));
